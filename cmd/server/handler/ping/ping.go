@@ -16,7 +16,7 @@ func NewControllerPing() *Controller {
 func (c *Controller) HandlerPing() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
-			"mensaje": "pong",
+			"mensaje": "pong - clase10",
 		})
 	}
 }
