@@ -20,8 +20,9 @@ type Repository interface {
 	Update(ctx context.Context, producto domain.Producto, id string) (domain.Producto, error)
 	Delete(ctx context.Context, id string) error
 }
-
+// esta estructura es la base del repository
 type repository struct {
+	// implemento una base de datos en memoria que va a ser un slice de productos
 	db []domain.Producto
 }
 
