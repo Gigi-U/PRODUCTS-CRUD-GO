@@ -7,7 +7,7 @@ import (
 	handlerPing "github.com/Gigi-U/PRODUCTS-CRUD-GO.git/cmd/server/handler/ping"
 	handlerProducto "github.com/Gigi-U/PRODUCTS-CRUD-GO.git/cmd/server/handler/products"
 	
-	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/domain"
+	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/models"
 	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/products"
 
 	"github.com/gin-gonic/gin"
@@ -51,8 +51,8 @@ func main() {
 }
 
 // LoadStore carga la base de datos en memoria
-func LoadStore() []domain.Producto {
-	return []domain.Producto{
+func LoadStore() []models.Producto {
+	return []models.Producto{
 		{
 			Id:          "1",
 			Name:        "Coco Cola",

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/domain"
+	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/models"
 )
 
 var (
@@ -14,31 +14,31 @@ var (
 )
 
 type Repository interface {
-	Create(ctx context.Context, producto domain.Producto) (domain.Producto, error)
-	GetAll(ctx context.Context) ([]domain.Producto, error)
-	GetByID(ctx context.Context, id string) (domain.Producto, error)
-	Update(ctx context.Context, producto domain.Producto, id string) (domain.Producto, error)
+	Create(ctx context.Context, producto models.Producto) (models.Producto, error)
+	GetAll(ctx context.Context) ([]models.Producto, error)
+	GetByID(ctx context.Context, id string) (models.Producto, error)
+	Update(ctx context.Context, producto models.Producto, id string) (models.Producto, error)
 	Delete(ctx context.Context, id string) error
 }
 // esta estructura es la base del repository
 type repository struct {
 	// implemento una base de datos en memoria que va a ser un slice de productos
-	db []domain.Producto
+	db []models.Producto
 }
 
 // NewMemoryRepository ....
-func NewMemoryRepository(db []domain.Producto) Repository {
+func NewMemoryRepository(db []models.Producto) Repository {
 	return &repository{db: db}
 }
 
 // Create ....
-func (r *repository) Create(ctx context.Context, producto domain.Producto) (domain.Producto, error) {
+func (r *repository) Create(ctx context.Context, producto models.Producto) (models.Producto, error) {
 	r.db = append(r.db, producto)
 	return producto, nil
 }
 
 // GetAll...
-func (r *repository) GetAll(ctx context.Context) ([]domain.Producto, error) {
+func (r *repository) GetAll(ctx context.Context) ([]models.Producto, error) {
 
 	contenidoContext := ctx.Value("rol")
 
@@ -47,15 +47,15 @@ func (r *repository) GetAll(ctx context.Context) ([]domain.Producto, error) {
 	}
 
 	if len(r.db) < 1 {
-		return []domain.Producto{}, ErrEmpty
+		return []models.Producto{}, ErrEmpty
 	}
 
 	return r.db, nil
 }
 
 // GetByID .....
-func (r *repository) GetByID(ctx context.Context, id string) (domain.Producto, error) {
-	var result domain.Producto
+func (r *repository) GetByID(ctx context.Context, id string) (models.Producto, error) {
+	var result models.Producto
 	for _, value := range r.db {
 		if value.Id == id {
 			result = value
@@ -64,7 +64,7 @@ func (r *repository) GetByID(ctx context.Context, id string) (domain.Producto, e
 	}
 
 	if result.Id == "" {
-		return domain.Producto{}, ErrNotFound
+		return models.Producto{}, ErrNotFound
 	}
 
 	return result, nil
@@ -73,10 +73,10 @@ func (r *repository) GetByID(ctx context.Context, id string) (domain.Producto, e
 // Update ...
 func (r *repository) Update(
 	ctx context.Context,
-	producto domain.Producto,
-	id string) (domain.Producto, error) {
+	producto models.Producto,
+	id string) (models.Producto, error) {
 
-	var result domain.Producto
+	var result models.Producto
 	for key, value := range r.db {
 		if value.Id == id {
 			producto.Id = id
@@ -87,7 +87,7 @@ func (r *repository) Update(
 	}
 
 	if result.Id == "" {
-		return domain.Producto{}, ErrNotFound
+		return models.Producto{}, ErrNotFound
 	}
 
 	return result, nil
@@ -96,7 +96,7 @@ func (r *repository) Update(
 
 // Delete ...
 func (r *repository) Delete(ctx context.Context, id string) error {
-	var result domain.Producto
+	var result models.Producto
 	for key, value := range r.db {
 		if value.Id == id {
 			result = r.db[key]

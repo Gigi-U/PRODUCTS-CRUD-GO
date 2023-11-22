@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/domain"
+	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/models"
 	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/products"
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +21,7 @@ func NewControllerProducts(service products.Service) *Controller {
 func (c *Controller) HandlerCreate() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		var productRequest domain.Producto
+		var productRequest models.Producto
 
 		err := ctx.Bind(&productRequest)
 
@@ -96,7 +96,7 @@ func (c *Controller) HandlerUpdate() gin.HandlerFunc {
 		// Recuperamos el id de la request
 		idParam := ctx.Param("id")
 
-		var productRequest domain.Producto
+		var productRequest models.Producto
 
 		err := ctx.Bind(&productRequest)
 
