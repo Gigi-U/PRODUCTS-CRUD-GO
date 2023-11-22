@@ -6,7 +6,9 @@ import (
 
 	handlerPing "github.com/Gigi-U/PRODUCTS-CRUD-GO.git/cmd/server/handler/ping"
 	handlerProducto "github.com/Gigi-U/PRODUCTS-CRUD-GO.git/cmd/server/handler/products"
-	
+	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/pkg/middleware"
+	"github.com/joho/godotenv"
+
 	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/models"
 	"github.com/Gigi-U/PRODUCTS-CRUD-GO.git/internal/products"
 
@@ -14,6 +16,12 @@ import (
 )
 
 func main() {
+
+	// Cargar las variables de entorno
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Carga la base de datos en memoria
 	db := LoadStore()
@@ -26,7 +34,9 @@ func main() {
 	service := products.NewServiceProduct(repostory)
 	controllerProduct := handlerProducto.NewControllerProducts(service)
 
-	engine := gin.Default()
+	engine := gin.New()
+	engine.Use(gin.Recovery())
+	engine.Use(middleware.Logger())
 
 	group := engine.Group("/api/v1")
 	{
@@ -34,11 +44,11 @@ func main() {
 
 		grupoProducto := group.Group("/producto")
 		{
-			grupoProducto.POST("", controllerProduct.HandlerCreate())
-			grupoProducto.GET("", controllerProduct.HandlerGetAll())
+			grupoProducto.POST("", middleware.Authenticate(), controllerProduct.HandlerCreate())
+			grupoProducto.GET("", middleware.Authenticate(), controllerProduct.HandlerGetAll())
 			grupoProducto.GET("/:id", controllerProduct.HandlerGetByID())
-			grupoProducto.PUT("/:id", controllerProduct.HandlerUpdate())
-			grupoProducto.DELETE("/:id", controllerProduct.HandlerDelete())
+			grupoProducto.PUT("/:id", middleware.Authenticate(), controllerProduct.HandlerUpdate())
+			grupoProducto.DELETE("/:id", middleware.Authenticate(), controllerProduct.HandlerDelete())
 
 		}
 
