@@ -1,31 +1,42 @@
 # PRODUCTS-CRUD-GO
 
-Inicia el proyecto en la clase 10 --> rama "clase10"
+Clase 9 - Servidor Web 
+    command: go get -u github.com/gin-gonic/gin
 
-Clase 11 - organización de proyecto en paquetes
+Clase 10 - método GET --> rama "clase10"   
+Clase 11 - organización de proyecto en paquetes --> rama "clase11" 
 
-cmd/server = 
-    - punto de entrada de nuestra api 
-    - incluye: 
-        - main
-        - handler (o controlador) --> van los controllers de los productos (dentro de carpetas con su nombre)
-        - router --> van todas las declaraciones de rutas de los endpoints
+PRODUCTS-CRUD-GO
+    |__cmd/server (punto de entrada de nuestra api )
+    |    |_ handler (o controlador) --> van los controllers de los productos (dentro de carpetas con su nombre)
+    |    |_ router --> van todas las declaraciones de rutas de los endpoints
+    |    - main
+    |    
+    |__internal (todo lo de manejo interno. lógica)
+    |    |_ models(o domain) --> va el modelo
+    |    |_ products --> van el service y el repository
+    |
+    |__pkg (va todo lo que es comun al proyecto)
+         |_ middleware
+         |_ utils 
+         |_ web (en web van todas las salidas comunes de la api, o estructuras comunes de respuesta o request) .
+        Configuracion de servidor va tmb en pkg, si es una configuración interna del servidor puede ir en internal
 
-internal = 
-    - todo lo de manejo interno va ahi. 
-    - incluye:
-        - models(o domain) --> va el modelo
-        - products --> van el service y el repository
 
-pkg = 
-    - va todo lo que es comun al proyecto. 
-    - puede incluir: 
-        - middleware
-        - utils 
-        - web (en web van todas las salidas comunes de la api, o estructuras comunes de respuesta o request) .
 
-Configuracion de servidor va tmb en pkg, si es una configuración interna del servidor piede ir en internal
+Clase 12 - configuración de entorno --> rama "clase12y13" 
+    command: go get -u github.com/joho/godotenv
 
+Clase 13 - Middleware --> rama "clase12y13" 
+
+Clase 14 - capa de acceso a datos --> rama "clase14" 
+    command: go get "github.com/go-sql-driver/mysql" +  crear archivo .env donde iran las variables
+    +
+    import (
+        "database/sql"
+
+        _ "github.com/go-sql-driver/mysql"
+    )  // en main
 
 <<<<<<<<<<<<<FLUJO>>>>>>>>>>
 
@@ -38,7 +49,4 @@ Configuracion de servidor va tmb en pkg, si es una configuración interna del se
 
 
 
- A CONTINUAR ---> clase ante última - 17:19 
-
-
-
+ CONTINUAR ---> grabación clase 11 - 17:19 

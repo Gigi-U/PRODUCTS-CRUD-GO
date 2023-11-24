@@ -13,16 +13,7 @@ var (
 	ErrNotFound = errors.New("product not found")
 )
 
-type Repository interface {
-	Create(ctx context.Context, producto models.Producto) (models.Producto, error)
-	GetAll(ctx context.Context) ([]models.Producto, error)
-	GetByID(ctx context.Context, id string) (models.Producto, error)
-	Update(ctx context.Context, producto models.Producto, id string) (models.Producto, error)
-	Delete(ctx context.Context, id string) error
-}
-// esta estructura es la base del repository
 type repository struct {
-	// implemento una base de datos en memoria que va a ser un slice de productos
 	db []models.Producto
 }
 
@@ -54,7 +45,7 @@ func (r *repository) GetAll(ctx context.Context) ([]models.Producto, error) {
 }
 
 // GetByID .....
-func (r *repository) GetByID(ctx context.Context, id string) (models.Producto, error) {
+func (r *repository) GetByID(ctx context.Context, id int) (models.Producto, error) {
 	var result models.Producto
 	for _, value := range r.db {
 		if value.Id == id {
@@ -63,7 +54,7 @@ func (r *repository) GetByID(ctx context.Context, id string) (models.Producto, e
 		}
 	}
 
-	if result.Id == "" {
+	if result.Id < 1 {
 		return models.Producto{}, ErrNotFound
 	}
 
@@ -74,7 +65,7 @@ func (r *repository) GetByID(ctx context.Context, id string) (models.Producto, e
 func (r *repository) Update(
 	ctx context.Context,
 	producto models.Producto,
-	id string) (models.Producto, error) {
+	id int) (models.Producto, error) {
 
 	var result models.Producto
 	for key, value := range r.db {
@@ -86,7 +77,7 @@ func (r *repository) Update(
 		}
 	}
 
-	if result.Id == "" {
+	if result.Id < 1 {
 		return models.Producto{}, ErrNotFound
 	}
 
@@ -95,7 +86,7 @@ func (r *repository) Update(
 }
 
 // Delete ...
-func (r *repository) Delete(ctx context.Context, id string) error {
+func (r *repository) Delete(ctx context.Context, id int) error {
 	var result models.Producto
 	for key, value := range r.db {
 		if value.Id == id {
@@ -105,7 +96,7 @@ func (r *repository) Delete(ctx context.Context, id string) error {
 		}
 	}
 
-	if result.Id == "" {
+	if result.Id < 1 {
 		return ErrNotFound
 	}
 
