@@ -1,35 +1,35 @@
 # PRODUCTS-CRUD-GO
 
-Clase 9 - Servidor Web 
+Clase 9 (Servidor Web)
     command: go get -u github.com/gin-gonic/gin
 
-Clase 10 - método GET --> rama "clase10"   
-Clase 11 - organización de proyecto en paquetes --> rama "clase11" 
+Clase 10 (inicio CRUD) método GET --> rama "clase10"   
+Clase 11 (cont. CRUD + ESTRUCTURACIÓN de proyecto en paquetes) --> rama "clase11" 
 
-PRODUCTS-CRUD-GO
-    |__cmd/server (punto de entrada de nuestra api )
-    |    |_ handler (o controlador) --> van los controllers de los productos (dentro de carpetas con su nombre)
-    |    |_ router --> van todas las declaraciones de rutas de los endpoints
-    |    - main
-    |    
-    |__internal (todo lo de manejo interno. lógica)
-    |    |_ models(o domain) --> va el modelo
-    |    |_ products --> van el service y el repository
-    |
-    |__pkg (va todo lo que es comun al proyecto)
-         |_ middleware
-         |_ utils 
-         |_ web (en web van todas las salidas comunes de la api, o estructuras comunes de respuesta o request) .
-        Configuracion de servidor va tmb en pkg, si es una configuración interna del servidor puede ir en internal
+    PRODUCTS-CRUD-GO
+        |__cmd/server (punto de entrada de nuestra api )
+        |    |_ handler (o controlador) --> van los controllers de los productos (dentro de carpetas con su nombre)
+        |    |_ router --> van todas las declaraciones de rutas de los endpoints
+        |    - main
+        |    
+        |__internal (todo lo de manejo interno. lógica)
+        |    |_ models(o domain) --> va el modelo
+        |    |_ products --> van el service y el repository
+        |
+        |__pkg (va todo lo que es comun al proyecto)
+            |_ middleware
+            |_ utils 
+            |_ web (en web van todas las salidas comunes de la api, o estructuras comunes de respuesta o request) .
+            Configuracion de servidor va tmb en pkg, si es una configuración interna del servidor puede ir en internal
 
 
 
-Clase 12 - configuración de entorno --> rama "clase12y13" 
+Clase 12 (VARIABLES DE ENTORNO) configuración de entorno --> rama "clase12y13" 
     command: go get -u github.com/joho/godotenv
 
-Clase 13 - Middleware --> rama "clase12y13" 
+Clase 13 (SEGURIDAD) Middleware --> rama "clase12y13" 
 
-Clase 14 - capa de acceso a datos --> rama "clase14" 
+Clase 14 (DB) - capa de acceso a datos --> rama "clase14" 
     command: go get "github.com/go-sql-driver/mysql" +  crear archivo .env donde iran las variables
     +
     import (
